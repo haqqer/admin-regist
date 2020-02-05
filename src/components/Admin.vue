@@ -1,12 +1,17 @@
 <template>
   <v-container>
-    <h1>Welcome Back!</h1>
+    <v-row class="text-center">
+      <h1>Test</h1>
+    </v-row>
   </v-container>
 </template>
 
 <script>
-
 export default {
-  name: 'home',
+
 }
 </script>
+
+<style>
+
+</style>

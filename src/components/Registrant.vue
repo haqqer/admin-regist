@@ -31,7 +31,7 @@ export default {
            try {
                const regisId = this.$route.params.regisId
                console.log(regisId)
-               const result = await this.$http.get('http://bemfeb.chickenkiller.com/registrant/'+regisId)
+               const result = await this.$http.get(this.$store.state.url+'/registrant/'+regisId)
                this.registrant = result.data.data 
            } catch (error) {
                console.log(error)

@@ -8,7 +8,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    url: 'http://bemfeb.chickenkiller.com',
+    url: 'https://haqqer.mooo.com',
     token: localStorage.getItem('token') || null,
     user: {},
     status: '',

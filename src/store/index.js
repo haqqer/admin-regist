@@ -38,6 +38,7 @@ export default new Vuex.Store({
           data: data,
           method: 'POST'
         })
+        console.log(result)
         const token = result.data.data.token
         const user = result.data.data.user
         localStorage.setItem('token', token)
@@ -49,7 +50,37 @@ export default new Vuex.Store({
         localStorage.removeItem('token')
         return false
       }
-    }
+    },
+    async tokenExp({commit}) {
+      try {
+        if(this.state.token.length < 1) {
+          return false
+        }
+        const token = this.state.token
+        axios.defaults.headers.common['Authorization'] = 'Bearer '+token
+        const result = await axios.get(this.state.url+'/auth/me')
+        const decoded = result.data.data.decoded
+        const now = Math.round((new Date().getTime()) / 1000) 
+        console.log('exp :'+decoded.exp)
+        console.log('now :'+now)
+        const timeLeft = decoded.exp - now
+        console.log(timeLeft)
+        if(timeLeft < 0) {
+          return false
+        }
+        return true
+      } catch (error) {
+        
+      }
+    },
+    async logout({commit}) {
+      try {
+        localStorage.removeItem('token');
+        return true
+      } catch (error) {
+        return error
+      }
+    } 
   },
   modules: {
   }

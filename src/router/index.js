@@ -27,6 +27,10 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue'),
       },
       {
+        path: 'registrants',
+        component: () => import(/* webpackChunkName: "about" */ '../components/List.vue'),
+      },
+      {
         path: 'scanner',
         component: () => import(/* webpackChunkName: "about" */ '../components/Scanner.vue'),
       },
@@ -41,10 +45,14 @@ const router = new VueRouter({
   routes
 })
 console.log(store.getters.getToken)
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   if(to.matched.some(record => record.meta.requiresAuth)) {
     if (store.getters.getToken) {
-      next()
+      if(await store.dispatch('tokenExp')) {
+        next()
+      } else {
+        next('/login')
+      }
       return
     }
     next('/login') 

@@ -15,7 +15,7 @@
                     <v-spacer></v-spacer>
                     <v-form>
                         <v-text-field v-model="email" label="email" name="email" prepend-icon="mdi-email" type="text"/>
-                        <v-text-field v-model="password" label="password" name="password" prepend-icon="mdi-key" type="password"/>
+                        <v-text-field v-model="password" label="password" name="password" prepend-icon="mdi-key" type="password" @keyup.enter="login"/>
                     </v-form>
                 </v-card-text>
                 <v-card-actions>

@@ -8,13 +8,20 @@
                 <v-data-table
                     :headers="header"
                     :items="registrants"
-                    @click:row="showRegistrant"
                 >
-                    <template v-slot:item.action>
-                        <v-btn icon color="primary">
+                    <template v-slot:item.status="{ item }">
+                        <span v-if="item.status == 2">
+                            Hadir
+                        </span>
+                        <span v-else>
+                            Tidak Hadir
+                        </span>
+                    </template>
+                    <template v-slot:item.action="{ item }">
+                        <v-btn icon color="primary" @click="showRegistrant(item)">
                             <v-icon>mdi-eye</v-icon>
                         </v-btn>
-                        <v-btn icon color="error">
+                        <v-btn icon color="error"  @click="deleteRegistrant(item)">
                             <v-icon>mdi-delete</v-icon>
                         </v-btn>
                         <v-btn icon color="success">
@@ -57,6 +64,10 @@ export default {
                 value: 'socmed'
             },
             {
+                text: 'Status',
+                value: 'status'
+            },
+            {
                 text: 'Action',
                 value: 'action'
             },
@@ -74,6 +85,10 @@ export default {
         },
         showRegistrant(value) {
             this.$router.push('/admin/registrant/'+value.regisId)
+        },
+        async deleteRegistrant(value) {
+            const result = await this.$http.delete(this.$store.state.url+'/registrant/'+value.id)
+            await this.getData()
         }
     },
     mounted() {
